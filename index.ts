@@ -1,26 +1,20 @@
 import './style.css';
 
-import {
-  concatMap,
-  delay,
-  from,
-  map,
-  mergeMap,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
+import { mergeMap } from 'rxjs';
 
-let array = ['Paris', 'Venedig', 'Mailand', 'Muenchen', 'Kairo', 'Sydney'];
+import { httpRequest, userCityInput } from './server';
 
-let obs = from(array).pipe(concatMap((val) => of(val).pipe(delay(1000))));
+/**
+ * --- INPUT ---
+ * Paris
+ * Venedig
+ * Mailand
+ * Muenchen
+ * Kairo
+ * Sydney
+ *
+ * userCityInput() - returns Observable(String) with incoming cities from user
+ * httpRequest(city: String) - returns Observable(String) with repsonse from server for city (takes up to 6 seconds)
+ */
 
-obs
-  .pipe(
-    mergeMap((val) =>
-      of(val + '_emit').pipe(delay(Math.floor(Math.random() * 6000)))
-    )
-  )
-  .subscribe(console.log);
-
-// Open the console in the bottom right to see results.
+userCityInput().pipe(mergeMap(httpRequest)).subscribe(console.log);
