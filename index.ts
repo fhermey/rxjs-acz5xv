@@ -1,8 +1,13 @@
 import './style.css';
 
-import { mergeMap } from 'rxjs';
+import {} from 'rxjs';
 
-import { httpRequest, userCityInput } from './server';
+import {
+  isGermanCity,
+  httpRequest,
+  shouldFilterGermanCities,
+  userCityInput,
+} from './server';
 
 /**
  * --- INPUT ---
@@ -11,10 +16,11 @@ import { httpRequest, userCityInput } from './server';
  * Mailand
  * Muenchen
  * Kairo
+ * Frankfurt
  * Sydney
  *
- * userCityInput() - returns Observable(String) with incoming cities from user
- * httpRequest(city: String) - returns Observable(String) with repsonse from server for city (takes up to 6 seconds)
+ * userCityInput() - returns Observable<String> with incoming cities from user
+ * httpRequest(city: String) - returns Observable<String> with repsonse from server for city (takes up to 6 seconds)
+ * shouldFilterGermanCities() - returns Observable<boolean> indicating, whether german cities should be filtered or not
+ * isGermanCity() - returns true if city is in germany
  */
-
-userCityInput().pipe(mergeMap(httpRequest)).subscribe(console.log);
